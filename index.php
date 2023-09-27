@@ -1,12 +1,8 @@
 <?php
 
+session_start();
 
-$min = 0;
-$pw_char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:;!<@#$%';
-$max = strlen($pw_char);
-$generated_password = '';
-
-
+include_once __DIR__. '/partials/functions.php';
 
 $has_length = isset($_GET['pw-length']);
 
@@ -14,15 +10,11 @@ if ($has_length) {
     
     $length = (int) $_GET['pw-length'];
 
-    for ($i=0; $i < $length ; $i++) { 
-        $picked_char = substr($pw_char, rand($min,$max), 1);
-        $generated_password .= $picked_char;
-    };
-
-
+    $_SESSION['generated_password'] = generate_password($length);
+    
+    header('Location: ./password.php');
+                    
 }
-var_dump( $generated_password )
-
 
 ?>
 
@@ -54,9 +46,9 @@ var_dump( $generated_password )
                                 php Strong Password Generator
                             </h2>
                         </div>
-                        <?php if ($generated_password === ''): ?>
-                        <form action="">
 
+                        <form action="">
+                
                             <label for="pw-length" class="my-2 text-light" >Length of the password required</label>
                             <input class="form-control" type="text" placeholder="Please select a length..."
                                 aria-label="pw-length" name="pw-length">
@@ -68,11 +60,7 @@ var_dump( $generated_password )
                             </div>
 
                         </form>
-                        <?php else: ?>
-                            <div class="generated-pw text-center text-warning">
-                                <?php echo $generated_password ; ?>
-                            </div>
-                        <?php endif; ?>
+
                     
                     </div>
                 
