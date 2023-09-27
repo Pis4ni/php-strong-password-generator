@@ -54,7 +54,7 @@ var_dump( $generated_password )
                                 php Strong Password Generator
                             </h2>
                         </div>
-
+                        <?php if ($generated_password === ''): ?>
                         <form action="">
 
                             <label for="pw-length" class="my-2 text-light" >Length of the password required</label>
@@ -68,6 +68,11 @@ var_dump( $generated_password )
                             </div>
 
                         </form>
+                        <?php else: ?>
+                            <div class="generated-pw text-center text-warning">
+                                <?php echo $generated_password ; ?>
+                            </div>
+                        <?php endif; ?>
                     
                     </div>
                 
